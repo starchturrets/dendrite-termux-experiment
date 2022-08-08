@@ -138,7 +138,7 @@ Don't forget to point your domain at your home IP Address, and to port forward 4
       $ pkg install golang git
       $ git clone https://github.com/matrix-org/dendrite
       $ cd dendrite
-      $ ./build.sh
+      $ ./build.sh # This takes a LONG time
       $ ./bin/generate-keys --private-key matrix_key.pem
       $ cp dendrite-sample.monolith.yaml dendrite.yaml
       $ vim dendrite.yaml
