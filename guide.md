@@ -130,7 +130,7 @@ As I was using the manual DNS challenge, I had to edit the DNS from the Cloudfla
 
 # Setting up Dendrite itself
 
-Instructions are taken from the [official docs](https://github.com/matrix-org/dendrite):
+- Instructions are taken from the [official docs](https://github.com/matrix-org/dendrite):
      
       $ pkg install golang git
       $ git clone https://github.com/matrix-org/dendrite
@@ -139,9 +139,15 @@ Instructions are taken from the [official docs](https://github.com/matrix-org/de
       $ ./bin/generate-keys --private-key matrix_key.pem
       $ cp dendrite-sample.monolith.yaml dendrite.yaml
       $ vim dendrite.yaml
-- You'll have to edit the server name, the path to the TLS certificates, as well as the Postgres user you created earlier.
-   
 
-# Setting up your DNS
+- At minimum, you'll have to edit the server name (MY.DOMAIN), as well as the Postgres user you created earlier:
+  
+      database:
+        connection_string: postgresql://username:password@localhost/dendrite?sslmode=disable
+        
+- To run the server:
+      
+      $ ./bin/dendrite-monolith-server --tls-cert /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/fullchain.pem --tls-key /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/privkey.pem --config dendrite.yaml
+
 
 
