@@ -8,15 +8,29 @@
 
 # Main Packages Needed to be Installed in Termux
  
-- Dendrite (for the actual server itself)
-- NGINX (to handle reverse proxying)
 - Certbot (to handle HTTPS, needed for federation)
-- PostgresSQL (needed for the Dendrite database)
+- PostgreSQL (needed for the Dendrite database)
+- NGINX (to handle reverse proxying)
+- Dendrite (for the actual server itself)
 
 
 It's also reccomended to install openSSH, and setup a termux-service for it.
 
+
 # Setting up SSH 
+[Based off of the termux wiki:](https://wiki.termux.com/wiki/Remote_Access)
+
+- Run `pkg update && pkg upgrade` to update everything first.
+- Then run `pkg install openssh termux-services`.
+- Run `passwd` to setup a password.
+- Restart Termux so you can run `sv-enable sshd` (this starts the SSH daemon whenever termux is started).
+- The device's local IP address can be found under WiFi settings.
+- You can then execute `ssh user@IP -p 8022` to gain access from another device.
+
+# Setting up Certbot
+
+Instructions are based off of [here](https://github.com/medanisjbara/synapse-termux/blob/main/GUIDE.md) and [here.](https://gist.github.com/meijerwynand/d2627fd2d45299ac70330f957de2d545)
+
 # Setting up your DNS
 
 
