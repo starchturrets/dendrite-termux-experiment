@@ -148,6 +148,23 @@ As I was using the manual DNS challenge, I had to edit the DNS from the Cloudfla
 - To run the server:
       
       $ ./bin/dendrite-monolith-server --tls-cert /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/fullchain.pem --tls-key /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/privkey.pem --config dendrite.yaml
+      
+If it shows no errors, then you can proceed to [the federation tester](https://federationtester.matrix.org) to see if it passes the checks there. The only thing that remains afterwards is to setup a `termux-service` for dendrite.
 
+      $ mkdir -p $PREFIX/var/service/dendrite/log
+      $ ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/dendrite/log/run
+      $ vim $PREFIX/var/service/dendrite/run
+Copy and paste the following in:
+
+      $
+# Maintenance
+      
+To upgrade, run the following commands before restarting Termux:
+
+      $ pkg update && pkg upgrade
+      $ $PREFIX/opt/certbot/bin/pip install --upgrade pip certbot
+      $ cd dendrite
+      $ git pull
+      $ ./build.sh
 
 
