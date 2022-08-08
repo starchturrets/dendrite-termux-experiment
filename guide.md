@@ -124,9 +124,12 @@ As I was using the manual DNS challenge, I had to edit the DNS from the Cloudfla
           }
       }
 
+Then, run:
+
       $ ln -s $PREFIX/etc/nginx/sites-available/matrix $PREFIX/etc/nginx/sites-enabled
       $ sv-enable nginx # restart termux after this
 
+Don't forget to point your domain at your home IP Address, and to port forward 443 to 8443 in your router config.
 
 # Setting up Dendrite itself
 
