@@ -73,13 +73,73 @@ As I was using the manual DNS challenge, I had to edit the DNS from the Cloudfla
 
 # Setting up NGINX
 
+- The Dendrite devs provide a [sample configuration](https://github.com/matrix-org/dendrite/blob/main/docs/nginx/monolith-sample.conf) which is very helpful.
+- /u/medanisjbara's [guide](https://github.com/medanisjbara/synapse-termux/blob/main/GUIDE.md) is also very helpful. 
+
       $ pkg install nginx
-      $ sv-enable nginx # restart termux after this
+      $ cd $PREFIX/etc/nginx
+      $ cp nginx.conf nginx.conf.orig # copy the original file in case I need to restore
+      $ rm -f nginx.conf
+      $ curl "https://raw.githubusercontent.com/medanisjbara/synapse-termux/main/nginx.conf" -O $PREFIX/etc/nginx/nginx.conf
+      
+
+      
+- Set up the virtual hosts:
+
       $ mkdir $PREFIX/etc/nginx/sites-available $PREFIX/etc/nginx/sites-enabled
- 
-- I am using a [sample configuration provided by the official dendrite devs](https://github.com/matrix-org/dendrite/blob/main/docs/nginx/monolith-sample.conf).
+      $ vim $PREFIX/etc/nginx/sites-available/matrix
+
+- Copy paste the following in: 
 
 
+      #change IP to location of monolith server
+      upstream monolith{
+          server 127.0.0.1:8008;
+      }
+      server {
+          listen 8443 ssl; # IPv4
+          listen [::]:8443 ssl; # IPv6
+          server_name MY.DOMAIN;
+
+          ssl_certificate /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/fullchain.pem;
+          ssl_certificate_key /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/privkey.pem;
+
+          proxy_set_header Host      $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_read_timeout         600;
+
+          location /.well-known/matrix/server {
+              return 200 '{ "m.server": "MY.DOMAIN:443" }';
+          }
+
+          location /.well-known/matrix/client {
+              # If your sever_name here doesn't match your matrix homeserver URL
+              # (e.g. hostname.com as server_name and matrix.hostname.com as homeserver URL)
+              # add_header Access-Control-Allow-Origin '*';
+              return 200 '{ "m.homeserver": { "base_url": "https://MY.DOMAIN" } }';
+          }
+
+          location /_matrix {
+              proxy_pass http://monolith;
+          }
+      }
+
+      $ ln -s $PREFIX/etc/nginx/sites-available/matrix $PREFIX/etc/nginx/sites-enabled
+      $ sv-enable nginx # restart termux after this
+
+
+# Setting up Dendrite itself
+
+Instructions are taken from the [official docs](https://github.com/matrix-org/dendrite):
+     
+      $ pkg install golang git
+      $ git clone https://github.com/matrix-org/dendrite
+      $ cd dendrite
+      $ ./build.sh
+      $ ./bin/generate-keys --private-key matrix_key.pem
+      $ cp dendrite-sample.monolith.yaml dendrite.yaml
+      $ vim dendrite.yaml
+- You'll have to edit the server name, the path to the TLS certificates, as well as the Postgres user you created earlier.
    
 
 # Setting up your DNS
