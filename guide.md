@@ -172,8 +172,8 @@ Restart Termux.
 
 You can create a user account by running: 
    
-   $ cd dendrite
-   $  ./bin/create-account --config dendrite.yaml -username BOB
+    $ cd dendrite
+    $  ./bin/create-account --config dendrite.yaml -username BOB
 
 Said account should be accessible in Element.
 
