@@ -148,7 +148,8 @@ Don't forget to point your domain at your home IP Address, and to port forward 4
       database:
         connection_string: postgresql://username:password@localhost/dendrite?sslmode=disable
         
-- To run the server:
+ Also, don't forget to use an absolute path for the `private_key: /data/data/com.termux/files/home/dendrite/matrix_key.pem`.
+- To run the server and verify that it is properly connecting with postgres:
       
       $ ./bin/dendrite-monolith-server --tls-cert /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/fullchain.pem --tls-key /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/privkey.pem --config dendrite.yaml
       
@@ -159,7 +160,16 @@ If it shows no errors, then you can proceed to [the federation tester](https://f
       $ vim $PREFIX/var/service/dendrite/run
 Copy and paste the following in:
 
-      $
+      #!/data/data/com.termux/files/usr/bin/sh
+      exec /data/data/com.termux/files/home/dendrite/bin/dendrite-monolith-server --tls-cert /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/fullchain.pem --tls-key /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/privkey.pem --config /data/data/com.termux/files/home/dendrite/dendrite.yaml 2>&1
+      
+Finally,
+ 
+    $ chmod +x $PREFIX/var/service/dendrite/run # Makes it executable
+    $ sv-enable dendrite 
+    
+Restart Termux.
+
 # Maintenance
       
 To upgrade, run the following commands before restarting Termux:
