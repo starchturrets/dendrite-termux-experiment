@@ -155,9 +155,9 @@ Don't forget to point your domain at your home IP Address, and to port forward 4
       
 If it shows no errors, then you can proceed to [the federation tester](https://federationtester.matrix.org) to see if it passes the checks there. The only thing that remains afterwards is to setup a `termux-service` for dendrite.
 
-      $ mkdir -p $PREFIX/var/service/dendrite/log
-      $ ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/dendrite/log/run
-      $ vim $PREFIX/var/service/dendrite/run
+      $ mkdir -p $PREFIX/var/service/quickstart-dendrite/log
+      $ ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/quickstart-dendrite/log/run
+      $ vim $PREFIX/var/service/quickstart-dendrite/run
 Copy and paste the following in:
 
       #!/data/data/com.termux/files/usr/bin/sh
@@ -165,7 +165,7 @@ Copy and paste the following in:
       
 Finally,
  
-    $ chmod +x $PREFIX/var/service/dendrite/run # Makes it executable
+    $ chmod +x $PREFIX/var/service/quickstart-dendrite/run # Makes it executable
     $ sv-enable dendrite 
     
 Restart Termux.
