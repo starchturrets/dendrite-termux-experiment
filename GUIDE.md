@@ -212,6 +212,6 @@ Then go open up `whatsapp/config.yaml` with vim. And add in  `postgres://mautrix
      $ cd && cd cd dendrite
      $ vim dendrite.yaml
 
-Under `app_service_api` -> `config_files` add in `- /data/mautrix-telegram-registration.yaml`.
+Under `app_service_api` -> `config_files` add in `- /data/data/com.termux/files/home/whatsapp/registration.yaml`.
 
 Finally, you can `cd && cd whatsapp` and run `./mautrix-whatsapp` to start the bridge. I haven't been able to get the `termux-service` working with it yet. 
