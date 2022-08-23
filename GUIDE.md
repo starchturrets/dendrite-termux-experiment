@@ -206,7 +206,7 @@ Similar to earlier, you'll have to create a postgres user and database cluster f
      $ createuser -P mautrix
      $ createdb -O mautrix mautrix-whatsapp
 
-Then go open up `whatsapp/config.yaml` with vim. And add in  `postgres://mautrix:PASSWORD@localhost/mautrix-whatsapp?sslmode` under `appservice.database.uri`. Don't forget to edit in the homeserver settings and bridge permissions as well.
+Then go open up `whatsapp/config.yaml` with vim. And add in  `postgres://mautrix:PASSWORD@localhost/mautrix-whatsapp?sslmode=disable` under `appservice.database.uri`. Don't forget to edit in the homeserver settings and bridge permissions as well.
 
      $ ./mautrix-whatsapp -g
      $ cd && cd cd dendrite
