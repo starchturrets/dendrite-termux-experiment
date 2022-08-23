@@ -1,6 +1,6 @@
 # Prerequisites
 
-- An Android Phone (in this case, I used a lava iris88s running Android 8.1.0, kernel version 4.4.95+. It had 2 GB RAM, and I expanded its internal storage with a 64 GB SD Card).  
+- An Android Phone (in this case, I used a lava iris88s running Android 8.1.0, kernel version 4.4.95+. It had 2 GB RAM, and I ~~expanded its internal storage with a 64 GB SD Card.~~ Termux apparently can't use the SD card storage, so that seems to be pointless.)
 - A domain you control (I used a freenom domain a friend gifted me ages ago).
 - A router that allows you to do port forwarding.
 
@@ -173,9 +173,9 @@ Restart Termux.
 You can create a user account by running: 
    
     $ cd dendrite
-    $  ./bin/create-account --config dendrite.yaml -username BOB
+    $ ./bin/create-account --config dendrite.yaml --url http://localhost:8008 --username alice
 
-Said account should be accessible in Element.
+Said account should be accessible in Element. Don't forget to backup your keys as well!
 
 # Maintenance
       
@@ -188,3 +188,30 @@ To upgrade, run the following commands before restarting Termux:
       $ ./build.sh
 
 
+
+# Mautrix-WhatsApp
+
+[Based off of the official docs here.](https://docs.mau.fi/bridges/go/setup.html?bridge=whatsapp)
+
+From my testing, bridges such as `mautrix-whatsapp` function decently enough (when manually compiled), with the caveat that end to bridge encryption doesn't work. As I understand it, regardless of encryption, the dendrite homeserver will still be able to read your whatsapp message contents (this is just how bridges between different protocols seem to function). However, it can be handy if you want to access the bridge from another homeserver (such as matrix.org, tchncs.de, etc) without trusting their admins with your message conents. 
+
+     $ git clone https://github.com/mautrix/whatsapp
+     $ cd whatsapp 
+     $ pkg install ffmpeg # needed for gifs according to the official docs
+     $ ./build.sh -tags nocrypto 
+     $ cp example-config.yaml config.yaml
+     
+Similar to earlier, you'll have to create a postgres user and database cluster for the bridge.
+
+     $ createuser -P mautrix
+     $ createdb -O mautrix mautrix-whatsapp
+
+Then go open up `whatsapp/config.yaml` with vim. And add in  `postgres://mautrix:PASSWORD@localhost/mautrix-whatsapp?sslmode` under `appservice.database.uri`. Don't forget to edit in the homeserver settings and bridge permissions as well.
+
+     $ ./mautrix-whatsapp -g
+     $ cd && cd cd dendrite
+     $ vim dendrite.yaml
+
+Under `app_service_api` -> `config_files` add in `- /data/mautrix-telegram-registration.yaml`.
+
+Finally, you can `cd && cd whatsapp` and run `./mautrix-whatsapp` to start the bridge. I haven't been able to get the `termux-service` working with it yet. 
