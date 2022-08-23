@@ -217,6 +217,7 @@ Under `app_service_api` -> `config_files` add in `- /data/data/com.termux/files/
 Finally, you can `cd && cd whatsapp` and run `./mautrix-whatsapp` to start the bridge. I haven't been able to get the `termux-service` working with it yet. 
 
 Upgrading is identical to dendrite:
+     
      $ cd whatsapp
      $ git pull
      $ ./build.sh -tags nocrypto
