@@ -166,7 +166,7 @@ Copy and paste the following in:
 Finally,
  
     $ chmod +x $PREFIX/var/service/quickstart-dendrite/run # Makes it executable
-    $ sv-enable dendrite 
+    $ sv-enable quickstart-dendrite 
     
 Restart Termux.
 
