@@ -187,19 +187,8 @@ You can create a user account by running:
 
 Said account should be accessible in Element. Don't forget to backup your keys as well!
 
-# Maintenance
-      
-To upgrade, run the following commands before restarting Termux:
 
-      $ pkg update && pkg upgrade
-      $ $PREFIX/opt/certbot/bin/pip install --upgrade pip certbot
-      $ cd dendrite
-      $ git pull
-      $ ./build.sh
-
-
-
-# Mautrix-WhatsApp
+# mautrix-whatsapp
 
 [Based off of the official docs here.](https://docs.mau.fi/bridges/go/setup.html?bridge=whatsapp)
 
@@ -226,8 +215,21 @@ Under `app_service_api` -> `config_files` add in `- /data/data/com.termux/files/
 
 Finally, you can `cd && cd whatsapp` and run `./mautrix-whatsapp` to start the bridge. I haven't been able to get the `termux-service` working with it yet. 
 
-Upgrading is identical to dendrite:
-     
-     $ cd whatsapp
-     $ git pull
-     $ ./build.sh -tags nocrypto
+
+
+# Maintenance
+      
+Despite the massive limitations on an EOL Android Phone (no kernel updates, can't easily setup stuff like `fail2ban`, keeping SSH access to your local network only and updating what you can can't hurt. 
+
+To upgrade, run the following commands before restarting Termux:
+
+      $ pkg update && pkg upgrade
+      $ $PREFIX/opt/certbot/bin/pip install --upgrade pip certbot
+      $ cd dendrite
+      $ git pull
+      $ ./build.sh     
+    	 $ cd && cd whatsapp
+      $ git pull
+      $ ./build.sh -tags nocrypto
+
+If the SSL certs are expired, rerun `certbot` to obtain new ones.
