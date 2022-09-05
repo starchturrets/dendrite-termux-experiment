@@ -150,11 +150,10 @@ Don't forget to point your domain at your home IP Address, and to port forward 4
         
  Also, don't forget to use an absolute path for the `private_key: /data/data/com.termux/files/home/dendrite/matrix_key.pem`.
 
-- If you wish to configure for dendrite to store media files in an external SD card, run `termux-setup-storage` first as per [their docs](https://wiki.termux.com/wiki/Termux-setup-storage), then change the
-
-
-	# Configuration for the Media API.
-	media_api:
+- If you wish to configure for dendrite to store media files in an external SD card, run `termux-setup-storage` first as per [their docs](https://wiki.termux.com/wiki/Termux-setup-storage), then change the base_path as shown:
+  
+      # Configuration for the Media API.
+      media_api:
   	# Storage path for uploaded media. May be relative or absolute.
   		base_path: /data/data/com.termux/files/storage/shared/Download/media_store  
 
