@@ -228,7 +228,7 @@ To upgrade, run the following commands before restarting Termux:
       $ cd dendrite
       $ git pull
       $ ./build.sh     
-    	 $ cd && cd whatsapp
+      $ cd && cd whatsapp
       $ git pull
       $ ./build.sh -tags nocrypto
 
