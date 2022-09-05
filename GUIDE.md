@@ -1,6 +1,6 @@
 # Prerequisites
 
-- An Android Phone (in this case, I used a lava iris88s running Android 8.1.0, kernel version 4.4.95+. It had 2 GB RAM, and I ~~expanded its internal storage with a 64 GB SD Card.~~ Termux apparently can't use the SD card storage, so that seems to be pointless.)
+- An Android Phone (in this case, I used a lava iris88s running Android 8.1.0, kernel version 4.4.95+. It had 2 GB RAM, and I expanded its internal storage with a 64 GB SD Card. (While Termux can't be directly installed onto an SD card, dendrite can be configured to store media files on it, which should help avoid clogging up the internal storage.)
 - A domain you control (I used a freenom domain a friend gifted me ages ago).
 - A router that allows you to do port forwarding.
 
@@ -149,6 +149,17 @@ Don't forget to point your domain at your home IP Address, and to port forward 4
         connection_string: postgresql://username:password@localhost/dendrite?sslmode=disable
         
  Also, don't forget to use an absolute path for the `private_key: /data/data/com.termux/files/home/dendrite/matrix_key.pem`.
+
+- If you wish to configure for dendrite to store media files in an external SD card, run `termux-setup-storage` first as per [their docs](https://wiki.termux.com/wiki/Termux-setup-storage), then change the
+
+
+	# Configuration for the Media API.
+	media_api:
+  	# Storage path for uploaded media. May be relative or absolute.
+  		base_path: /data/data/com.termux/files/storage/shared/Download/media_store  
+
+If you wish to transfer an already existing `media_store` directory you can do so by zipping it with `tar`, copying the generated file over, then unzipping it on the SD card. 
+
 - To run the server and verify that it is properly connecting with postgres:
       
       $ ./bin/dendrite-monolith-server --tls-cert /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/fullchain.pem --tls-key /data/data/com.termux/files/usr/etc/letsencrypt/live/MY.DOMAIN/privkey.pem --config dendrite.yaml
