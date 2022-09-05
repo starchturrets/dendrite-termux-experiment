@@ -1,6 +1,6 @@
 # Prerequisites
 
-- An Android Phone (in this case, I used a lava iris88s running Android 8.1.0, kernel version 4.4.95+. It had 2 GB RAM, and I expanded its internal storage with a 64 GB SD Card. (While Termux can't be directly installed onto an SD card, dendrite can be configured to store media files on it, which should help avoid clogging up the internal storage.)
+- An Android Phone (in this case, I used a lava iris88s running Android 8.1.0, kernel version 4.4.95+. It had 2 GB RAM, and I expanded its internal storage with a 64 GB SD Card. While Termux can't be directly installed onto an SD card, dendrite can be configured to store media files on it, which should help avoid clogging up the internal storage.)
 - A domain you control (I used a freenom domain a friend gifted me ages ago).
 - A router that allows you to do port forwarding.
 
