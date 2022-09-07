@@ -56,6 +56,7 @@ As I was using the manual DNS challenge, I had to edit the DNS from the Cloudfla
 
 # Setting up PostgreSQL
 
+At this time, postgres does not appear to support having its data directory on an external SD card because of ownership errors.
 - First, create a database cluster, and setup termux-service so it starts the postgres server automatically.
 
       $ pkg install postgresql
