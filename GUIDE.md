@@ -61,8 +61,9 @@ At this time, postgres does not appear to support having its data directory on a
 
       $ pkg install postgresql
       $ pg_ctl -D $PREFIX/var/lib/postgresql initdb
-      $ sv-enable postgres # restart termux after this
-    
+      $ sv-enable postgres 
+      $ /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
+
 - The [official Dendrite documentation](https://matrix-org.github.io/dendrite/installation/database) provide instructions for how to prepare the database. The Termux version does have some slight differences in syntax, however. 
       
       $ createuser -P dendrite
@@ -128,7 +129,8 @@ At this time, postgres does not appear to support having its data directory on a
 Then, run:
 
       $ ln -s $PREFIX/etc/nginx/sites-available/matrix $PREFIX/etc/nginx/sites-enabled
-      $ sv-enable nginx # restart termux after this
+      $ sv-enable nginx 
+      $ /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
 
 Don't forget to point your domain at your home IP Address, and to port forward 443 to 8443 in your router config.
 
@@ -178,8 +180,8 @@ Finally,
  
     $ chmod +x $PREFIX/var/service/quickstart-dendrite/run # Makes it executable
     $ sv-enable quickstart-dendrite 
-    
-Restart Termux.
+    $ /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
+
 
 You can create a user account by running: 
    
