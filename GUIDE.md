@@ -233,4 +233,7 @@ To upgrade, run the following commands before restarting Termux:
       $ git pull
       $ ./build.sh -tags nocrypto
 
+
+Alternatively, you can download the update script from [here](https://github.com/starchturrets/dendrite-termux-experiment/blob/main/update.sh), then simply run `./update.sh`.
+
 If the SSL certs are expired, rerun `certbot` to obtain new ones.
