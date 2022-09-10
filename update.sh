@@ -1,17 +1,16 @@
 #!/data/data/com.termux/files/usr/bin/sh
 
 echo "updating termux packages..."
-pkg update && pkg upgrade -y
+pkg update -y && pkg upgrade -y
 echo "updating certbot..."
-$PREFIX/opt/certbot/bin/pip install --upgrade pip certbot
+/data/data/com.termux/files/usr/opt/certbot/bin/pip install --upgrade pip certbot
 echo "updating dendrite..."
-cd dendrite
+cd "/data/data/com.termux/files/home/dendrite"
 git pull
-./build.sh
+/data/data/com.termux/files/home/dendrite/build.sh
 echo "updating mautrix-whatsapp..."
-cd
-cd whatsapp
+cd "/data/data/com.termux/files/home/whatsapp"
 git pull
-./build.sh -tags nocrypto
+/data/data/com.termux/files/home/whatsapp/build.sh -tags nocrypto
 echo "restarting services..."
-/data/data/com.termux/files/usr/etc/profile.d/start-services.sh
+/data/data/com.termux/files/home/restart.sh
