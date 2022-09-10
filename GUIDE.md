@@ -222,7 +222,7 @@ Finally, you can `cd && cd whatsapp` and run `./mautrix-whatsapp` to start the b
 
 # Maintenance
       
-Despite the massive limitations on an EOL Android Phone (no kernel updates, can't easily setup stuff like `fail2ban`, keeping SSH access to your local network only and updating what you can can't hurt. 
+Despite the massive limitations on an EOL Android Phone (no kernel updates, can't easily setup stuff like `fail2ban`), keeping SSH access to your local network only and updating what you can can't hurt. 
 
 To upgrade, run the following commands before restarting Termux:
 
@@ -236,10 +236,45 @@ To upgrade, run the following commands before restarting Termux:
       $ ./build.sh -tags nocrypto
 
 
-Alternatively, you can download the update script from [here](https://github.com/starchturrets/dendrite-termux-experiment/blob/main/update.sh), then simply run `./update.sh`.
+ Alternatively, you can setup a cronjob to automatically update things every day at midnight.
+ 
+ First, create ´update.sh´ and ´restart.sh´ in your home directory and make them executable with ´chmod +x´. 
+ 
+ For ´update.sh´, paste in:
+ 
+    #!/data/data/com.termux/files/usr/bin/sh
+
+    echo "updating termux packages..."
+    pkg update -y && pkg upgrade -y
+    echo "updating certbot..."
+    /data/data/com.termux/files/usr/opt/certbot/bin/pip install --upgrade pip certbot
+    echo "updating dendrite..."
+    cd "/data/data/com.termux/files/home/dendrite"
+    git pull
+    /data/data/com.termux/files/home/dendrite/build.sh
+    echo "updating mautrix-whatsapp..."
+    cd "/data/data/com.termux/files/home/whatsapp"
+    git pull
+    /data/data/com.termux/files/home/whatsapp/build.sh -tags nocrypto 
+    echo "restarting services..."
+    source /data/data/com.termux/files/home/restart.sh
+
+For ´restart.sh´, paste in:
+
+     #!/data/data/com.termux/files/usr/bin/sh
+     for service in crond nginx postgres quickstart-dendrite sshd whatsapp
+          do 
+               touch "/data/data/com.termux/files/usr/var/service/${service}/down"
+               rm -f "/data/data/com.termux/files/usr/var/service/${service}/down"
+               source /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
+          done
+   
+Enable the cronjob:
 
       $ pkg install cronie
       $ crontab -e 
+Paste in: ´00 00 * * * /data/data/com.termux/files/home/update.sh´
+ 
       $ sv-enable crond
-
+      $ ./restart.sh
 If the SSL certs are expired, rerun `certbot` to obtain new ones.
