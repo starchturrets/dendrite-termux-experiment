@@ -238,9 +238,9 @@ To upgrade, run the following commands before restarting Termux:
 
  Alternatively, you can setup a cronjob to automatically update things every day at midnight.
  
- First, create ´update.sh´ and ´restart.sh´ in your home directory and make them executable with ´chmod +x´. 
+ First, create `update.sh` and `restart.sh` in your home directory and make them executable with `chmod +x`. 
  
- For ´update.sh´, paste in:
+ For `update.sh`, paste in:
  
     #!/data/data/com.termux/files/usr/bin/sh
 
@@ -259,7 +259,7 @@ To upgrade, run the following commands before restarting Termux:
     echo "restarting services..."
     source /data/data/com.termux/files/home/restart.sh
 
-For ´restart.sh´, paste in:
+For `restart.sh`, paste in:
 
      #!/data/data/com.termux/files/usr/bin/sh
      for service in crond nginx postgres quickstart-dendrite sshd whatsapp
@@ -273,8 +273,11 @@ Enable the cronjob:
 
       $ pkg install cronie
       $ crontab -e 
-Paste in: ´00 00 * * * /data/data/com.termux/files/home/update.sh´
+Paste in: `00 00 * * * /data/data/com.termux/files/home/update.sh`
  
       $ sv-enable crond
       $ ./restart.sh
+
+You can verify that the cronjob is running at the appointed time by using `logcat`.
+
 If the SSL certs are expired, rerun `certbot` to obtain new ones.
