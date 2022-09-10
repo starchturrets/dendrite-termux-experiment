@@ -6,5 +6,5 @@ do
         touch "/data/data/com.termux/files/usr/var/service/${service}/down"
         rm -f "/data/data/com.termux/files/usr/var/service/${service}/down"
 
-        /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
+        source /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
 done
