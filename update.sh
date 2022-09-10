@@ -13,4 +13,4 @@ cd "/data/data/com.termux/files/home/whatsapp"
 git pull
 /data/data/com.termux/files/home/whatsapp/build.sh -tags nocrypto
 echo "restarting services..."
-/data/data/com.termux/files/home/restart.sh
+source /data/data/com.termux/files/home/restart.sh
