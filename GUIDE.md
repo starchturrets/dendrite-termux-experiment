@@ -238,4 +238,8 @@ To upgrade, run the following commands before restarting Termux:
 
 Alternatively, you can download the update script from [here](https://github.com/starchturrets/dendrite-termux-experiment/blob/main/update.sh), then simply run `./update.sh`.
 
+      $ pkg install cronie
+      $ crontab -e 
+      $ sv-enable crond
+
 If the SSL certs are expired, rerun `certbot` to obtain new ones.
